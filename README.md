@@ -1,5 +1,9 @@
 # Tukma
 
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Go](https://img.shields.io/badge/go-1.25+-00ADD8.svg)](https://go.dev/)
+[![CI](https://github.com/CasualEngineerZombie/tukma/actions/workflows/ci.yml/badge.svg)](https://github.com/CasualEngineerZombie/tukma/actions)
+
 > A Go-native execution and coordination platform for reliable workloads, automation, and distributed systems.
 
 Tukma is a Go-native execution platform for coordinating and running reliable workloads. It provides the foundation for workers, scheduling, workflows, events, and distributed execution, designed to power everything from automation and data pipelines to AI workloads.
@@ -245,12 +249,22 @@ Current ADRs:
 
 - [ADR 0001: Initial Architecture Direction](docs/adr/0001-initial-architecture.md)
 
+## Community
+
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Security Policy](SECURITY.md)
+
 ## Contributing
 
-Tukma is being developed as an open-source project and contributions will be welcome as the APIs and architecture become more stable.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to get started.
 
 For now, the best way to contribute is to open an issue describing a problem, use case, or proposed change before starting a large implementation.
 
+## Security
+
+For reporting security vulnerabilities, please see [SECURITY.md](SECURITY.md).
+
 ## License
 
-Tukma is currently being prepared for public development. Licensing will be finalized before the first public release.
+Tukma is licensed under the [Apache License 2.0](LICENSE).

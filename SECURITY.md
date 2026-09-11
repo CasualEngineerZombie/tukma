@@ -8,7 +8,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Tukma, please send an email to **[INSERT EMAIL]**. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Tukma, please send an email to **hello@rianbarriga.com**. All security vulnerabilities will be promptly addressed.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 

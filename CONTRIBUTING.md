@@ -4,7 +4,7 @@ Thank you for your interest in contributing to Tukma! This document provides gui
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to **[INSERT EMAIL]**.
+This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to **hello@rianbarriga.com**.
 
 ## How to Contribute
 

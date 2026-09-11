@@ -7,7 +7,7 @@
     <meta name="description" content="A Go-native execution and coordination platform for reliable workloads, automation, and distributed systems.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -19,6 +19,7 @@
             --bg: #0a0a0a;
             --bg-card: #111111;
             --bg-card-hover: #1a1a1a;
+            --bg-code: #0d1117;
             --border: #222222;
             --border-accent: #00ADD8;
             --text: #e5e5e5;
@@ -28,6 +29,9 @@
             --accent-dim: rgba(0, 173, 216, 0.15);
             --go-blue: #00ADD8;
             --white: #ffffff;
+            --green: #7ec699;
+            --purple: #cc99cd;
+            --orange: #f08d49;
         }
 
         body {
@@ -232,14 +236,16 @@
             transform: translateY(-1px);
         }
 
-        /* Code block */
+        /* Code block - improved */
         .code-preview {
             margin: 64px auto 0;
-            max-width: 680px;
-            background: var(--bg-card);
+            max-width: 720px;
+            background: var(--bg-code);
             border: 1px solid var(--border);
             border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 173, 216, 0.05);
+            text-align: left;
         }
 
         .code-header {
@@ -265,22 +271,44 @@
             margin-left: auto;
             font-size: 0.75rem;
             color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .code-body {
-            padding: 20px 24px;
+            padding: 20px 0;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
-            line-height: 1.8;
+            line-height: 1.9;
             color: var(--text-muted);
             overflow-x: auto;
         }
 
-        .code-body .comment { color: #555555; }
-        .code-body .keyword { color: #cc99cd; }
-        .code-body .func { color: #f08d49; }
-        .code-body .string { color: #7ec699; }
-        .code-body .type { color: #00ADD8; }
+        .code-line {
+            display: flex;
+            padding: 0 24px;
+            white-space: pre;
+        }
+
+        .code-line:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .line-num {
+            width: 32px;
+            flex-shrink: 0;
+            color: #3d444d;
+            text-align: right;
+            margin-right: 20px;
+            user-select: none;
+        }
+
+        .code-body .comment { color: #8b949e; }
+        .code-body .keyword { color: #ff7b72; }
+        .code-body .func { color: #d2a8ff; }
+        .code-body .string { color: #a5d6ff; }
+        .code-body .type { color: #79c0ff; }
+        .code-body .number { color: #79c0ff; }
+        .code-body .builtin { color: #ffa657; }
 
         /* Features */
         .features {
@@ -408,30 +436,119 @@
             line-height: 1.6;
         }
 
-        /* Architecture */
+        /* Architecture - improved */
         .architecture {
             padding: 80px 0 100px;
             border-top: 1px solid var(--border);
         }
 
-        .arch-diagram {
-            max-width: 700px;
+        .arch-container {
+            max-width: 900px;
             margin: 48px auto 0;
-            padding: 40px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            line-height: 1.8;
-            color: var(--text-muted);
-            overflow-x: auto;
-            white-space: pre;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
         }
 
-        .arch-diagram .highlight {
+        .arch-layer {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .arch-node {
+            padding: 14px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text);
+            text-align: center;
+            transition: all 0.25s;
+            min-width: 120px;
+        }
+
+        .arch-node:hover {
+            border-color: var(--accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 173, 216, 0.15);
+        }
+
+        .arch-node.accent {
+            border-color: rgba(0, 173, 216, 0.4);
+            background: var(--accent-dim);
             color: var(--accent);
+        }
+
+        .arch-node .arch-sub {
+            display: block;
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .arch-connector {
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, var(--border-accent), var(--border));
+            position: relative;
+        }
+
+        .arch-connector::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid var(--border);
+        }
+
+        .arch-branch {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .arch-branch-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin-top: 24px;
+            position: relative;
+        }
+
+        .arch-branch-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 16px;
+            background: var(--border);
+        }
+
+        .arch-branch-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .arch-branch-item .arch-node {
+            margin-top: 16px;
         }
 
         /* CTA */
@@ -519,8 +636,18 @@
                 gap: 20px;
                 text-align: center;
             }
+
+            .arch-layer {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .arch-node {
+                min-width: 200px;
+            }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -581,15 +708,39 @@
                 <span class="code-title">cmd/tukma/main.go</span>
             </div>
             <div class="code-body">
-                <span class="keyword">package</span> main<br><br>
-                <span class="keyword">import</span> (<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"log"</span><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"os"</span><br>
-                )<br><br>
-                <span class="keyword">func</span> <span class="func">main</span>() {<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="type">log</span>.<span class="func">Println</span>(<span class="string">"tukma: development runtime"</span>)<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;<span class="type">os</span>.<span class="func">Exit</span>(<span class="type">0</span>)<br>
-                }
+                <div class="code-line"><span class="line-num">1</span><span><span class="keyword">package</span> main</span></div>
+                <div class="code-line"><span class="line-num">2</span><span></span></div>
+                <div class="code-line"><span class="line-num">3</span><span><span class="keyword">import</span> (</span></div>
+                <div class="code-line"><span class="line-num">4</span><span>    <span class="string">"context"</span></span></div>
+                <div class="code-line"><span class="line-num">5</span><span>    <span class="string">"log"</span></span></div>
+                <div class="code-line"><span class="line-num">6</span><span>    <span class="string">"os"</span></span></div>
+                <div class="code-line"><span class="line-num">7</span><span>    <span class="string">"os/signal"</span></span></div>
+                <div class="code-line"><span class="line-num">8</span><span>    <span class="string">"syscall"</span></span></div>
+                <div class="code-line"><span class="line-num">9</span><span></span></div>
+                <div class="code-line"><span class="line-num">10</span><span>    <span class="string">"github.com/tukma/tukma/internal/runtime"</span></span></div>
+                <div class="code-line"><span class="line-num">11</span><span>)</span></div>
+                <div class="code-line"><span class="line-num">12</span><span></span></div>
+                <div class="code-line"><span class="line-num">13</span><span><span class="keyword">func</span> <span class="func">main</span>() {</span></div>
+                <div class="code-line"><span class="line-num">14</span><span>    ctx, stop := signal.<span class="func">NotifyContext</span>(context.<span class="func">Background</span>(),</span></div>
+                <div class="code-line"><span class="line-num">15</span><span>        syscall.<span class="type">SIGINT</span>, syscall.<span class="type">SIGTERM</span>)</span></div>
+                <div class="code-line"><span class="line-num">16</span><span>    <span class="keyword">defer</span> <span class="func">stop</span>()</span></div>
+                <div class="code-line"><span class="line-num">17</span><span></span></div>
+                <div class="code-line"><span class="line-num">18</span><span>    rt := runtime.<span class="func">New</span>(runtime.<span class="func">WithConcurrency</span>(<span class="number">10</span>))</span></div>
+                <div class="code-line"><span class="line-num">19</span><span></span></div>
+                <div class="code-line"><span class="line-num">20</span><span>    <span class="keyword">if</span> err := rt.<span class="func">Start</span>(ctx); err != <span class="keyword">nil</span> {</span></div>
+                <div class="code-line"><span class="line-num">21</span><span>        log.<span class="func">Fatal</span>(<span class="string">"tukma: failed to start:"</span>, err)</span></div>
+                <div class="code-line"><span class="line-num">22</span><span>    }</span></div>
+                <div class="code-line"><span class="line-num">23</span><span></span></div>
+                <div class="code-line"><span class="line-num">24</span><span>    log.<span class="func">Println</span>(<span class="string">"tukma: development runtime started"</span>)</span></div>
+                <div class="code-line"><span class="line-num">25</span><span>    <span class="keyword">defer</span> rt.<span class="func">Stop</span>()</span></div>
+                <div class="code-line"><span class="line-num">26</span><span></span></div>
+                <div class="code-line"><span class="line-num">27</span><span>    <span class="keyword">if</span> err := rt.<span class="func">Wait</span>(ctx); err != <span class="keyword">nil</span> {</span></div>
+                <div class="code-line"><span class="line-num">28</span><span>        log.<span class="func">Println</span>(<span class="string">"tukma: shutdown:"</span>, err)</span></div>
+                <div class="code-line"><span class="line-num">29</span><span>    }</span></div>
+                <div class="code-line"><span class="line-num">30</span><span></span></div>
+                <div class="code-line"><span class="line-num">31</span><span>    log.<span class="func">Println</span>(<span class="string">"tukma: stopped cleanly"</span>)</span></div>
+                <div class="code-line"><span class="line-num">32</span><span>    os.<span class="func">Exit</span>(<span class="number">0</span>)</span></div>
+                <div class="code-line"><span class="line-num">33</span><span>}</span></div>
             </div>
         </div>
     </div>
@@ -681,29 +832,92 @@
             <div class="section-label">Architecture</div>
             <h2>Modular from the start</h2>
         </div>
-        <div class="arch-diagram"><span class="highlight">            Clients / CLI</span>
-                 |
-                 v
-            <span class="highlight">           HTTP / API</span>
-                 |
-                 v
-            <span class="highlight">         Coordination</span>
-                 |
-       +---------+---------+
-       v         v         v
-    <span class="highlight">Queue</span>    <span class="highlight">Scheduler</span>    <span class="highlight">Events</span>
-       |         |         |
-       +---------+---------+
-                 v
-          <span class="highlight">Execution Runtime</span>
-                 |
-       +---------+---------+
-       v         v         v
-   <span class="highlight">Workers</span>   <span class="highlight">Tools</span>    <span class="highlight">Workflows</span>
-       |         |         |
-       +---------+---------+
-                 v
-     <span class="highlight">External Services</span></div>
+
+        <div class="arch-container">
+            <!-- Layer 1: Clients -->
+            <div class="arch-layer">
+                <div class="arch-node">
+                    Clients / CLI
+                    <span class="arch-sub">tukma CLI &middot; SDK &middot; API consumers</span>
+                </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <!-- Layer 2: API -->
+            <div class="arch-layer">
+                <div class="arch-node">
+                    HTTP / API
+                    <span class="arch-sub">REST endpoints &middot; job submission</span>
+                </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <!-- Layer 3: Coordination -->
+            <div class="arch-layer">
+                <div class="arch-node accent">
+                    Coordination
+                    <span class="arch-sub">orchestrates all components</span>
+                </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <!-- Layer 4: Core components -->
+            <div class="arch-layer">
+                <div class="arch-node">
+                    Queue
+                    <span class="arch-sub">FIFO &middot; retries &middot; backpressure</span>
+                </div>
+                <div class="arch-node">
+                    Scheduler
+                    <span class="arch-sub">delayed &middot; cron &middot; recurring</span>
+                </div>
+                <div class="arch-node">
+                    Events
+                    <span class="arch-sub">pub/sub &middot; decoupled</span>
+                </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <!-- Layer 5: Execution Runtime -->
+            <div class="arch-layer">
+                <div class="arch-node accent">
+                    Execution Runtime
+                    <span class="arch-sub">lifecycle &middot; cancellation &middot; concurrency</span>
+                </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <!-- Layer 6: Workers / Tools / Workflows -->
+            <div class="arch-layer">
+                <div class="arch-node">
+                    Workers
+                    <span class="arch-sub">concurrent execution</span>
+                </div>
+                <div class="arch-node">
+                    Tools
+                    <span class="arch-sub">reusable operations</span>
+                </div>
+                <div class="arch-node">
+                    Workflows
+                    <span class="arch-sub">composed pipelines</span>
+                </div>
+            </div>
+
+            <div class="arch-connector"></div>
+
+            <!-- Layer 7: External -->
+            <div class="arch-layer">
+                <div class="arch-node">
+                    External Services
+                    <span class="arch-sub">databases &middot; APIs &middot; webhooks</span>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
